@@ -30,7 +30,7 @@ class Comment(db.Model):
     check_id = db.Column(db.Integer, db.ForeignKey('tb_user_basic.id'), doc='审核人员ID')
     check_time = db.Column(db.DateTime, doc='审核时间')
     delete_time = db.Column(db.DateTime, doc='删除时间')
-    user = db.relationship("User", backref="comments")
+    user = db.relationship("User", backref="comments", foreign_keys=[user_id], uselist=False)
 
 
 

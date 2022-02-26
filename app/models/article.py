@@ -42,7 +42,7 @@ class Article(db.Model, TimeBaseModel):
     dislike_count = db.Column(db.Integer, default=0, doc='点踩数')
 
     # area = db.relationship("Area", backref=db.backref('articles', lazy='dynamic'), uselist=False)
-    user = db.relationship("User", backref=db.backref('articles', lazy='dynamic'), uselist=False)
+    user = db.relationship("User", backref=db.backref('articles', lazy='dynamic'), foreign_keys=[user_id], uselist=False)
     classes = db.relationship('Classes', backref=db.backref('articles', lazy='dynamic'), uselist=False)
     area = db.relationship('Area', backref='articles', uselist=False)
 

@@ -21,7 +21,7 @@ class Administrator(db.Model):
     account_id = db.Column(db.Integer, db.ForeignKey('tb_user_basic.id'), doc='用户ID')
     password_hash = db.Column(db.String(128), nullable=False)  # 加密的密码
     group_id = db.Column(db.Integer, db.ForeignKey("tb_role_group.role_id"), doc='角色id')
-
+    account = db.relationship("User", backref=db.backref('admini', uselist=False), uselist=False)
 
 class User(db.Model):
     """用户基本信息"""
