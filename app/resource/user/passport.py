@@ -4,12 +4,18 @@ from datetime import datetime
 import random
 
 from flask_restful import Resource
+<<<<<<< HEAD
 from flask_restful.inputs import regex
+=======
+>>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
 from flask_restful.reqparse import RequestParser
 from sqlalchemy.orm import load_only
 
 from app import redis_client, db
+<<<<<<< HEAD
 from app.models.user import User, Administrator
+=======
+>>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
 from common.utils.constants import SMS_CODE_EXPIRE
 from common.utils.my_jwt_util import _generate_tokens
 from common.utils.my_parser import mobile_type, pwd_type
@@ -28,11 +34,15 @@ class SMSCodeResource(Resource):
         # celery 第三方发送短信
         # celery_send_sms_code.delay(mobile, rand_num)
         print('>>>>>异步发送短信')
+<<<<<<< HEAD
         print('周边游注册码： "mobile": {}, "code": {}'.format(mobile, rand_num))
+=======
+>>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
         return {'mobile': mobile}
 
 
 
+<<<<<<< HEAD
 
 class RegisterResource(Resource):
     """管理员注册视图"""
@@ -74,6 +84,8 @@ class RegisterResource(Resource):
 
 class LoginResource(Resource):
     """登录视图"""
+=======
+>>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
     def post(self):
         # 构造请求参数
         parser = RequestParser()
@@ -84,19 +96,30 @@ class LoginResource(Resource):
         args = parser.parse_args()
         mobile = args.mobile
         pwd = args.pwd
+<<<<<<< HEAD
 
         # 自己的做的加密方式
         # m = hashlib.sha256()
         # m.update(pwd.encode('utf-8'))
 
+=======
+        m.update(pwd.encode('utf-8'))
+>>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
 
 
         try:
             # 数据库查询
             user = User.query.options(load_only(User.id)).filter(User.mobile == mobile).first()
+<<<<<<< HEAD
 
             if user.roles:
                 if not user.check_password(pwd):
+=======
+            if user:
+                print('sdfd')
+                print(user)
+                if user.admini.password_hash != m.hexdigest():
+>>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
                     return {"message": "账户或者密码有误"}, 401
                 user.last_login = datetime.now()
                 db.session.add(user)
@@ -137,7 +160,10 @@ class LoginResource(Resource):
 
 
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46

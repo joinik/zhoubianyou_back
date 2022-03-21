@@ -42,8 +42,12 @@ class Article(db.Model, TimeBaseModel):
     dislike_count = db.Column(db.Integer, default=0, doc='点踩数')
 
     # area = db.relationship("Area", backref=db.backref('articles', lazy='dynamic'), uselist=False)
+<<<<<<< HEAD
     user = db.relationship("User", backref=db.backref('articles', lazy='dynamic'), foreign_keys=[user_id],
                            uselist=False)
+=======
+    user = db.relationship("User", backref=db.backref('articles', lazy='dynamic'), foreign_keys=[user_id], uselist=False)
+>>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
     classes = db.relationship('Classes', backref=db.backref('articles', lazy='dynamic'), uselist=False)
     area = db.relationship('Area', backref='articles', uselist=False)
 
@@ -88,6 +92,7 @@ class ArticleReport(db.Model):
     文章举报表
     """
     __tablename__ = 'tb_article_report'
+<<<<<<< HEAD
 
     class TYPE:
         OTHERPROBLEMS = 0  # 其他问题
@@ -99,6 +104,18 @@ class ArticleReport(db.Model):
         NOTREALCONTENT = 6  # 内容不实
         CRIMINAL = 7  # 涉嫌违法犯罪
         TORT = 8  # 侵权
+=======
+    class TYPE:
+        OTHERPROBLEMS: 0  # 其他问题
+        TITLEEXAGGERATE: 1  # 标题夸张
+        VULGARPORN: 2  # 低俗色情
+        WRONGLY: 3  # 错别字多
+        ARCHIVEDNEWSREPEAT: 4  # 旧闻重复
+        BLINDADVERTISING: 5  # 广告软文
+        NOTREALCONTENT: 6  # 内容不实
+        CRIMINAL: 7  # 涉嫌违法犯罪
+        TORT: 8  # 侵权
+>>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
 
     report_id = db.Column(db.Integer, primary_key=True, doc='主键id')
     user_id = db.Column(db.Integer, db.ForeignKey('tb_user_basic.id'), doc='用户id')
@@ -108,6 +125,7 @@ class ArticleReport(db.Model):
     ctime = db.Column(db.DateTime, default=datetime.now, doc='创建时间')
 
 
+<<<<<<< HEAD
 class Special(db.Model, TimeBaseModel):
     """特色类"""
     __tablename__ = 'tb_special'
@@ -136,12 +154,40 @@ class Special(db.Model, TimeBaseModel):
             "aut_name": self.user.name if self.user_id else None,
             "spe_title": self.spe_title,
             "story": self.story,
+=======
+class Special(db.Model,TimeBaseModel):
+    """特色类"""
+    __tablename__ = 'tb_special'
+
+    id = db.Column(db.Integer,primary_key=True,doc='特色主键')
+    spe_intr = db.Column(db.String(256), doc='当地介绍')
+    spe_cultural = db.Column(db.String(256), doc='文化特色')
+    spe_scenery = db.Column(db.String(256), doc='美丽景色')
+    spe_snack = db.Column(db.String(256),doc='特色小吃')
+    area_id = db.Column(db.Integer, db.ForeignKey('tb_area.id'), doc='地区ID')
+    cover = db.Column(db.JSON, doc='封面')
+    admini_id = db.Column(db.Integer, db.ForeignKey('tb_administrator.admini_id'), doc='管理员id')
+
+
+    def todict(self):
+        return {
+            "area_id": self.area_id,
+>>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
             "spe_intr": self.spe_intr,
             "spe_cultural": self.spe_cultural,
             "spe_scenery": self.spe_scenery,
             "spe_snack": self.spe_snack,
+<<<<<<< HEAD
             "intr_photo": self.intr_photo,
             "cultural_photo": self.cultural_photo,
             "scenery_photo": self.scenery_photo,
             "snack_photo": self.snack_photo
         }
+=======
+            "cover": self.cover if self.cover else None
+        }
+
+
+
+
+>>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
