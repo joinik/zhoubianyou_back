@@ -2,12 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
-<<<<<<< HEAD
 migrations
 .qiniu_pythonsdk_hostscache.json
-=======
-migrations/
->>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
 # C extensions
 *.so
 

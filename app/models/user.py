@@ -3,17 +3,13 @@
 
 from datetime import datetime
 
-<<<<<<< HEAD
 from werkzeug.security import generate_password_hash, check_password_hash
 
-=======
->>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
 from app import db
 from common.utils.my_time_model import TimeBaseModel
 
 
 
-<<<<<<< HEAD
 
 
 class Administrator(db.Model):
@@ -46,14 +42,10 @@ class RoleGroup(db.Model,TimeBaseModel):
         # 6. 管理后台管理员的权限
         ADMINER = 0b00100000
 
-=======
-class RoleGroup(db.Model,TimeBaseModel):
->>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
     """权限分组类"""
     __tablename__ = 'tb_role_group'
     role_id = db.Column(db.Integer, primary_key=True, doc='角色ID')
     role_name = db.Column(db.String(20), unique=True, doc='角色昵称')
-<<<<<<< HEAD
     desc = db.Column(db.String(200), nullable=True, doc='描述信息')
     permissions = db.Column(db.Integer, default=ZMSPermission.ANNOUNCE)
     # 定义关系,users,roles,分别是两个表对应哪个的字段，secondary指定中间表
@@ -69,17 +61,6 @@ class RoleGroup(db.Model,TimeBaseModel):
 
 
 
-=======
-
-
-class Administrator(db.Model):
-    __tablename__ = 'tb_administrator'
-    admini_id = db.Column(db.Integer, primary_key=True, doc='管理员ID')
-    account_id = db.Column(db.Integer, db.ForeignKey('tb_user_basic.id'), doc='用户ID')
-    password_hash = db.Column(db.String(128), nullable=False)  # 加密的密码
-    group_id = db.Column(db.Integer, db.ForeignKey("tb_role_group.role_id"), doc='角色id')
-    account = db.relationship("User", backref=db.backref('admini', uselist=False), uselist=False)
->>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
 
 class User(db.Model):
     """用户基本信息"""
@@ -101,12 +82,9 @@ class User(db.Model):
     dianliang_area_num = db.Column(db.Integer, default=0, doc='点亮地区数')
     last_area_id = db.Column(db.Integer, db.ForeignKey("tb_area.id"), doc='用户上次位置')
     last_area = db.relationship("Area", backref=db.backref('users', uselist=False), uselist=False)
-<<<<<<< HEAD
     password_hash = db.Column(db.String(128))  # 加密的密码
 
 
-=======
->>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
 
     def to_dict(self):
         """模型转字典, 用于序列化处理"""
@@ -125,7 +103,6 @@ class User(db.Model):
             # 'like_comments': self.like_comments.
         }
 
-<<<<<<< HEAD
     @property
     def password(self):
         return self.password_hash
@@ -166,9 +143,6 @@ class User(db.Model):
 
     def is_developer(self):
         return self.has_permission(RoleGroup.ZMSPermission.ALL_PERMISSION)
-=======
-
->>>>>>> 331eb363a56ce905de68d06babec2ea732d2da46
 
 
 class Address(db.Model, TimeBaseModel):
