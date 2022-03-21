@@ -78,6 +78,14 @@ def action_parser(value):
     else:
         raise ValueError('Invalid action')
 
+def flag_parser(value):
+    """检查是 banned|unban"""
+    if re.match(r'banned|unband', value):
+        return value.lower()
+    else:
+        raise ValueError('Invalid flag')
+
+
 
 def image_file(value):
     """

@@ -69,7 +69,7 @@ class RegisterResource(Resource):
         db.session.add(admini)
         db.session.commit()
 
-        return {"admini_id":admini.admini_id},201
+        return {"message": "OK", "admini_id":admini.admini_id},201
 
 
 class LoginResource(Resource):
@@ -106,12 +106,12 @@ class LoginResource(Resource):
                 return {'token': token, 'refresh_token': refresh_token}, 201
 
             else:
-                return {'message': "没有权限，非法登录", "data": None}, 401
+                return {"message": "没有权限，非法登录", "data": None}, 401
 
         except Exception as e:
             print('登录 数据库查询失败')
             print(e)
-            return {'message': "请重新登录", "data":None}, 401
+            return {"message": "请重新登录", "data":None}, 401
 
 
 
@@ -119,7 +119,7 @@ class LoginResource(Resource):
     def put(self):
         if g.is_refresh:
             token, refresh_token = _generate_tokens(g.user_id, False)
-            return {'token': token}, 201
+            return {"token": token}, 201
         else:
             return {'message': "Invalid refreshToken", 'data': None}, 403
 

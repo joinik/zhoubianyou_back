@@ -19,8 +19,11 @@ def permission_requeired(permission):
         @wraps(func)
         def inner(*args,**kwargs):
             user = g.zms_user
+            if user is None:
+                return {'message': 'Invalid Token', 'data': None}, 401
             # 判断用户是否具有访问权限
             if user.has_permission(permission):
+
                 return func(*args,**kwargs)
             else:
                 return {'message': 'Permission Denied', 'data': None}, 401
