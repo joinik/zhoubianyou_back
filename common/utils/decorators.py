@@ -13,4 +13,17 @@ def login_required(f):
 
     return wrapper
 
+# 权限验证
+def permission_requeired(permission):
+    def outter(func):
+        @wraps(func)
+        def inner(*args,**kwargs):
+            user = g.zms_user
+            # 判断用户是否具有访问权限
+            if user.has_permission(permission):
+                return func(*args,**kwargs)
+            else:
+                return {'message': 'Permission Denied', 'data': None}, 401
+        return inner
+    return outter
 
