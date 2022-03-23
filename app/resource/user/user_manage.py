@@ -13,18 +13,34 @@ class UserManage(Resource):
 
     def get(self):
         """查询所有普通用户"""
-        user_list = User.query.options(load_only(User.id)).filter(User.password_hash.is_(None)).all()
-        rest = [
-            {"id": item.id,
-             "name": item.nick_name,
-             "mobile": item.mobile,
-             "business": item.business,
-             "status": item.status}
-            for item in user_list
-        ]
+        parser = RequestParser()
+        parser.add_argument('page', default=0, location='args', type=int)
+        parser.add_argument('limit', default=10, location='args', type=int)
+        args = parser.parse_args()
 
-        return {"message": "OK", "data": rest}
+        page = args.page
+        limit = args.limit
 
+        # page 查第几页
+        # per_page 每页几条
+        paginate = User.query.options(load_only(User.id)).filter(User.password_hash.is_(None)). \
+            order_by(-User.ctime).paginate(page=page, per_page=limit, error_out=False)
+
+        # rest = [
+        #     {"id": item.id,
+        #      "name": item.nick_name,
+        #      "mobile": item.mobile,
+        #      "business": item.business,
+        #      "status": item.status}
+        #     for item in paginate.items
+        # ]
+
+        return {"rest": [{"id": item.id,
+                          "name": item.nick_name,
+                          "mobile": item.mobile,
+                          "business": item.business,
+                          "status": item.status}
+                         for item in paginate.items], "totalPage": paginate.pages}
 
     def put(self):
         """修改用户的状态"""

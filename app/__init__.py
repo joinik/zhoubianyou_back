@@ -80,11 +80,11 @@ def register_extensions(app):
 def register_bp(app:Flask):
     """注册蓝图"""
     from app.resource.user import user_bp # 进行局部导入，避免组件没有初始化完成
-    # from app.resource.article import article_bp
+    from app.resource.article import art_bp
     # from app.resource.area import area_bp
     # from app.resource.comment import comment_bp
     app.register_blueprint(user_bp)
-    # app.register_blueprint(article_bp)
+    app.register_blueprint(art_bp)
     # app.register_blueprint(area_bp)
     # app.register_blueprint(comment_bp)
 

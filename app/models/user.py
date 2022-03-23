@@ -23,7 +23,7 @@ class Administrator(db.Model):
 
 
 class RoleGroup(db.Model,TimeBaseModel):
-
+    """角色权限分组类"""
 
     class ZMSPermission(object):
         # 255的二进制方式来表示 1111 1111
@@ -42,7 +42,7 @@ class RoleGroup(db.Model,TimeBaseModel):
         # 6. 管理后台管理员的权限
         ADMINER = 0b00100000
 
-    """权限分组类"""
+
     __tablename__ = 'tb_role_group'
     role_id = db.Column(db.Integer, primary_key=True, doc='角色ID')
     role_name = db.Column(db.String(20), unique=True, doc='角色昵称')
@@ -51,15 +51,6 @@ class RoleGroup(db.Model,TimeBaseModel):
     # 定义关系,users,roles,分别是两个表对应哪个的字段，secondary指定中间表
     users = db.relationship('User', secondary=Administrator.__tablename__,
                             backref=db.backref('roles'))
-
-
-
-
-
-
-
-
-
 
 
 class User(db.Model):

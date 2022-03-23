@@ -103,6 +103,7 @@ class LoginResource(Resource):
                 db.session.commit()
                 # 生成jwt
                 token, refresh_token = _generate_tokens(user.id)
+                # return {'token': token, 'refresh_token': refresh_token, "permissions": user.permissions}, 201
                 return {'token': token, 'refresh_token': refresh_token}, 201
 
             else:

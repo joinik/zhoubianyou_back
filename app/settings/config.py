@@ -16,8 +16,8 @@ class DefaultConfig:
     # 七牛云
     QINIU_ACCESS_KEY = '4-vVQInCM2SjXzkeEeI5sFA1ExaCuY0rCxnAb2JB'
     QINIU_SECRET_KEY = '9QK46pawEesuxyIvn2wuo6G-X_oSMG6Cg5NQnekP'
-    QINIU_BUCKET_NAME = 'suixinyou1'
-    QINIU_DOMAIN = 'http://r7r21o73n.hn-bkt.clouddn.com/'
+    QINIU_BUCKET_NAME = 'zhoubianyou'
+    QINIU_DOMAIN = 'http://r94faay5k.hn-bkt.clouddn.com/'
 
 
 config_dict = {
