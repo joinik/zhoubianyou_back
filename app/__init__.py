@@ -9,6 +9,9 @@ from flask_cors import CORS
 
 from flask_migrate import Migrate
 
+from redis import StrictRedis
+
+
 from app.settings.config import config_dict
 
 #  将common路径加入模块查询路径
@@ -45,7 +48,14 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+# redis数据库操作对象
+redis_client = None  # type: StrictRedis
+
+
 def register_extensions(app):
+
+
+
     """组件初始化"""
 
     # sqlalchemy组件初始化
@@ -54,6 +64,14 @@ def register_extensions(app):
 
     # 数据迁移组件初始化
     Migrate(app, db)
+
+
+    # redis组件初始化
+    global redis_client
+    redis_client = StrictRedis(host=app.config['REDIS_HOST'], port=app.config['REDIS_PORT'], decode_responses=True)
+
+    # 导入模型类
+    from .models import user, area, article,comment
 
     # 添加转换器
     from utils.my_converters import register_converters
@@ -66,14 +84,15 @@ def register_extensions(app):
 
 def register_bp(app:Flask):
     """注册蓝图"""
-    # from app.resource.user import user_bp # 进行局部导入，避免组件没有初始化完成
-    # from app.resource.article import article_bp
-    # from app.resource.area import area_bp
-    # from app.resource.comment import comment_bp
-    # app.register_blueprint(user_bp)
-    # app.register_blueprint(article_bp)
-    # app.register_blueprint(area_bp)
-    # app.register_blueprint(comment_bp)
+
+    from app.resource.user import user_bp # 进行局部导入，避免组件没有初始化完成
+    from app.resource.article import art_bp
+    from app.resource.area import area_bp
+    from app.resource.comment import comment_bp
+    app.register_blueprint(user_bp)
+    app.register_blueprint(art_bp)
+    app.register_blueprint(area_bp)
+    app.register_blueprint(comment_bp)
 
 def create_app(type):
     """创建应用 和组件初始化"""

@@ -1,5 +1,6 @@
 from flask import g
 from functools import wraps
+from common.utils.my_jwt_util import verify_jwt
 
 def login_required(f):
 
@@ -13,4 +14,21 @@ def login_required(f):
 
     return wrapper
 
+# 权限验证
+def permission_requeired(permission):
+    def outter(func):
+        @wraps(func)
+        def inner(*args,**kwargs):
+            user = g.zms_user
+            if user is None:
+
+                return {'message': 'Invalid Token', 'data': None}, 401
+            # 判断用户是否具有访问权限
+            if user.has_permission(permission):
+
+                return func(*args,**kwargs)
+            else:
+                return {'message': 'Permission Denied', 'data': None}, 401
+        return inner
+    return outter
 
